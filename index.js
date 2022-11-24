@@ -3,7 +3,7 @@ const app = express();
 const http = require("http");
 const { getPackedSettings } = require("http2");
 const server = http.createServer(app);
-const port = 3001;
+const port = 3003;
 const { Server } = require("socket.io");
 
 const io = new Server(server, {
@@ -45,5 +45,5 @@ io.on("connection", (socket) => {
 });
 
 server.listen(port, () => {
-  console.log("listening on *:3001");
+  console.log("listening on *:3003");
 });
