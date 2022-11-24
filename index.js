@@ -18,7 +18,6 @@ io.on("connection", (socket) => {
   console.log("USER HAS CONNECTED");
 
   let packets = [];
-  let previousSend = Date.now();
 
   socket.on("create_session", (sessionPayload) => {
     console.log("CREATE SESSION");
