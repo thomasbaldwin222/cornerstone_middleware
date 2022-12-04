@@ -133,10 +133,10 @@ io.on("connection", async (socket) => {
   // }, POST_INTERVAL);
 });
 
-app.get("/", (req, res) => {
-  res.writeHead(200, { "Content-Type": "application/json" });
-  res.write(JSON.stringify({ success: true }));
-  res.end();
-});
+// app.get("/", (req, res) => {
+//   res.writeHead(200, { "Content-Type": "application/json" });
+//   res.write(JSON.stringify({ success: true }));
+//   res.end();
+// });
 
-server.listen(port, () => {});
+// server.listen(port, () => {});
