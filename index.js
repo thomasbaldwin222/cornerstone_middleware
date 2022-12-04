@@ -21,7 +21,7 @@ const io = new Server(server, {
     credentials: true,
     maxHttpBufferSize: 1e10, // 100 MB
     cors: {
-      origin: "https://cornerstone-db.herokuapp.com/",
+      origin: "*",
       methods: ["GET", "POST"]
     }
   },
