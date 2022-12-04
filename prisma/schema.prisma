@@ -1,0 +1,59 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  SUPER_ADMIN
+  ADMIN
+  USER
+}
+
+model User {
+  id         Int     @id @default(autoincrement())
+  email      String  @unique
+  name       String?
+  company_id Int
+  company    Company @relation(fields: [company_id], references: [id])
+  role       Role    @default(USER)
+}
+
+model ScreenSession {
+  id         Int               @id @default(autoincrement())
+  company_id Int               @default(autoincrement())
+  screen     Json
+  location   Json              @default("{}")
+  date_time  BigInt?
+  ip         String?
+  recordings ScreenRecording[]
+}
+
+model ScreenRecording {
+  id             Int           @id @default(autoincrement())
+  company_id     Int           @default(autoincrement())
+  data           Json          @default("{}")
+  session_id     Int
+  screen_session ScreenSession @relation(fields: [session_id], references: [id])
+}
+
+model Company {
+  id                  Int                 @id @default(autoincrement())
+  name                String
+  site_configurations SiteConfiguration[]
+  users               User[]
+}
+
+model SiteConfiguration {
+  id         Int     @id @default(autoincrement())
+  name       String
+  company_id Int
+  company    Company @relation(fields: [company_id], references: [id])
+  url        String
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
