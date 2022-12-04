@@ -19,6 +19,7 @@ model User {
   company_id Int
   company    Company @relation(fields: [company_id], references: [id])
   role       Role    @default(USER)
+  password   String
 }
 
 model ScreenSession {
