@@ -16,10 +16,14 @@ console.log("MIDDLEWRE INIT");
 
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: "https://cornerstone-db.herokuapp.com/",
     methods: ["GET", "POST"],
     credentials: true,
     maxHttpBufferSize: 1e10, // 100 MB
+    cors: {
+      origin: "https://cornerstone-db.herokuapp.com/",
+      methods: ["GET", "POST"]
+    }
   },
 });
 
