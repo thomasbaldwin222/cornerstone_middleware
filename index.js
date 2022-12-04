@@ -3,7 +3,7 @@ const app = express();
 const http = require("http");
 const { getPackedSettings } = require("http2");
 const server = http.createServer(app);
-const port = 3001;
+const port = process.env.PORT || 3001;
 const { Server } = require("socket.io");
 
 const { PrismaClient } = require("@prisma/client");
@@ -133,10 +133,10 @@ io.on("connection", async (socket) => {
   // }, POST_INTERVAL);
 });
 
-// app.get("/", (req, res) => {
-//   res.writeHead(200, { "Content-Type": "application/json" });
-//   res.write(JSON.stringify({ success: true }));
-//   res.end();
-// });
+app.get("/", (req, res) => {
+  res.writeHead(200, { "Content-Type": "application/json" });
+  res.write(JSON.stringify({ success: true }));
+  res.end();
+});
 
-// server.listen(port, () => {});
+server.listen(port, () => {});
