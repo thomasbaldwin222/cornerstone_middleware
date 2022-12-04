@@ -16,22 +16,10 @@ console.log("MIDDLEWRE INIT");
 
 const io = new Server(server, {
   cors: {
-    origin: "https://cornerstone-db.herokuapp.com",
+    origin: "*",
     methods: ["GET", "POST"],
-    credentials: true,
+    // credentials: true,
     maxHttpBufferSize: 1e10, // 100 MB
-    cors: {
-      origin: "*",
-    },
-  },
-  handlePreflightRequest: (req, res) => {
-    const headers = {
-      "Access-Control-Allow-Headers": "Content-Type, Authorization",
-      "Access-Control-Allow-Origin": req.headers.origin, //or the specific origin you want to give access to,
-      "Access-Control-Allow-Credentials": true,
-    };
-    res.writeHead(200, headers);
-    res.end();
   },
 });
 
