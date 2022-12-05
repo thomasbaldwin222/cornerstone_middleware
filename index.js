@@ -78,7 +78,7 @@ io.on("connection", async (socket) => {
         screen: sessionPayload.screen,
         ip: sessionPayload.ip,
         location: {},
-        ip_info: screenSession.ip_info,
+        ip_info: sessionPayload.ip_info,
       },
     });
     console.log("CREATE SCREEN SESSION", screenSession);
