@@ -18,7 +18,8 @@ const io = new Server(server, {
   cors: {
     origin: "*",
     methods: ["GET", "POST"],
-    // credentials: true,
+    credentials: false,
+    rejectUnauthorized: false,
     maxHttpBufferSize: 1e10, // 100 MB
   },
 });
@@ -30,17 +31,18 @@ io.on("connection", async (socket) => {
   var room_id = query.room_id;
   if (!room_id) {
     // Handle this as required
+    console.log("_node: Exiting, no room_id found.");
+    return;
   } else {
     socket.join("company_1");
   }
-  console.log({ socket });
-  console.log("SESSION CREATED");
 
-  console.log("compan_1 ROOM JOINED");
+  console.log("_node: Session created.");
+  console.log(`_node: ${room_id} joined.`);
 
   let eventsQueue = [];
 
-  socket.on("disconnect", (reason) => console.log("DISCONNECTION", reason));
+  socket.on("disconnect", (reason) => console.log("_node: Disconnect", reason));
 
   const startInterval = (timeoutId) => {
     socket.emit("room_info", {
@@ -75,10 +77,8 @@ io.on("connection", async (socket) => {
         date_time: Date.now(),
         screen: sessionPayload.screen,
         ip: sessionPayload.ip,
-        location: {
-          href: "/",
-          ip_location: "Seattle, WA",
-        },
+        location: {},
+        ip_info: screenSession.ip_info,
       },
     });
     console.log("CREATE SCREEN SESSION", screenSession);
