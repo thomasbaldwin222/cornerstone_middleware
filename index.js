@@ -81,6 +81,7 @@ io.on("connection", async (socket) => {
         ip_info: sessionPayload.ip_info,
       },
     });
+    console.log({ screenSession }, sessionPayload.ip_info);
     console.log("CREATE SCREEN SESSION", screenSession);
     const screenRecording = await prisma.screenRecording.create({
       data: {
