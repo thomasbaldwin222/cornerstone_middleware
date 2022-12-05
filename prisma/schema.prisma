@@ -28,7 +28,7 @@ model ScreenSession {
   screen     Json
   location   Json              @default("{}")
   date_time  BigInt?
-  ip         String?
+  ip_info    Json              @default("{}")
   recordings ScreenRecording[]
 }
 
