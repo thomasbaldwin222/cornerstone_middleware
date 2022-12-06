@@ -33,6 +33,24 @@ io.on("connection", async (socket) => {
   var query = socket.handshake.query;
   var room_id = query.room_id;
   var location = query.location;
+
+  if (!location) {
+    console.log("_node: DISCONNECTING SOCKET, NO LOCATION, HREF");
+    return socket.disconnect();
+  }
+
+  const siteConfiguration = await prisma.siteConfiguration.findFirst({
+    where: {
+      url: location,
+    },
+  });
+
+  console.log({ siteConfiguration });
+
+  if (!siteConfiguration) {
+    return socket.disconnect();
+  }
+
   if (!room_id) {
     // Handle this as required
     console.log("_node: Exiting, no room_id found.");
