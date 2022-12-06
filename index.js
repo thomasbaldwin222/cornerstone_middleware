@@ -48,6 +48,8 @@ io.on("connection", async (socket) => {
   console.log({ siteConfiguration });
 
   if (!siteConfiguration) {
+    console.log({ location });
+    console.log("_node: DISCONNECTING SOCKET, NO CONFIGURATION");
     return socket.disconnect();
   }
 
@@ -125,8 +127,6 @@ io.on("connection", async (socket) => {
     // const kiloBytes = size / 1024;
     // const megaBytes = kiloBytes / 1024;
     const data = JSON.parse(events);
-
-    console.log({ recordingId });
 
     const prevRecording = await prisma.screenRecording.findFirst({
       where: { id: recordingId },
