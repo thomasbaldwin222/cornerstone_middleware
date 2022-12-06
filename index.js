@@ -32,7 +32,7 @@ io.on("connection", async (socket) => {
   let recordingId = undefined;
   var query = socket.handshake.query;
   var room_id = query.room_id;
-  var location = query.location.match(/^https?:\/\/[^#?\/]+/)?.[0];
+  var location = query.location;
 
   if (!location) {
     console.log("_node: DISCONNECTING SOCKET, NO LOCATION, HREF");
@@ -41,7 +41,7 @@ io.on("connection", async (socket) => {
 
   const siteConfiguration = await prisma.siteConfiguration.findFirst({
     where: {
-      url: location,
+      url: location.match(/^https?:\/\/[^#?\/]+/)?.[0],
     },
   });
 
