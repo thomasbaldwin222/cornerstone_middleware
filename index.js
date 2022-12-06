@@ -33,6 +33,7 @@ io.on("connection", async (socket) => {
   var query = socket.handshake.query;
   var room_id = query.room_id;
   var location = query.location;
+  console.log({ socket });
 
   if (!location) {
     console.log("_node: DISCONNECTING SOCKET, NO LOCATION, HREF");
@@ -44,8 +45,6 @@ io.on("connection", async (socket) => {
       url: location.match(/^https?:\/\/[^#?\/]+/)?.[0],
     },
   });
-
-  console.log({ siteConfiguration });
 
   if (!siteConfiguration) {
     console.log("_node: DISCONNECTING SOCKET, NO CONFIGURATION");
