@@ -43,6 +43,8 @@ io.on("connection", async (socket) => {
   console.log("_node: Session created.");
   console.log(`_node: ${room_id} joined.`);
 
+  console.log("url", socket.request.url);
+
   let eventsQueue = [];
 
   socket.on("disconnect", (reason) => console.log("_node: Disconnect", reason));
