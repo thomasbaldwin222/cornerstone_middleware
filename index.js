@@ -61,6 +61,7 @@ io.on("connection", async (socket) => {
       recording_enabled: siteConfiguration.recording_enabled,
     });
     console.log(`_node: Config emitted.`);
+    console.log({ time: Date.now().getSeconds() });
   }
 
   console.log("_node: Session created.");
