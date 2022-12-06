@@ -48,37 +48,27 @@ io.on("connection", async (socket) => {
   console.log({ siteConfiguration });
 
   if (!siteConfiguration) {
-    console.log({ location });
     console.log("_node: DISCONNECTING SOCKET, NO CONFIGURATION");
     return socket.disconnect();
   }
 
   if (!room_id) {
     // Handle this as required
-    console.log("_node: Exiting, no room_id found.");
+    console.log("_node: Exiting, no room_id found for " + room_id);
     return;
   } else {
     socket.join("company_1");
+    socket.emit("config", {
+      recording_enabled: siteConfiguration.recording_enabled,
+    });
   }
 
   console.log("_node: Session created.");
   console.log(`_node: ${room_id} joined.`);
 
-  console.log("url", location);
-
-  let eventsQueue = [];
-
-  socket.on("disconnect", (reason) => console.log("_node: Disconnect", reason));
-
-  const startInterval = (timeoutId) => {
-    socket.emit("room_info", {
-      connection_count: socket.client.conn.server.clientsCount,
-    });
-    if (timeoutId) clearTimeout(timeoutId);
-    const id = setTimeout(() => startInterval(id), 5000);
-  };
-
-  startInterval();
+  socket.on("disconnect", (reason) =>
+    console.log("_node: Socket disconnected", reason)
+  );
 
   socket.on("create_session", async (sessionPayload) => {
     // const a = await prisma.screenRecording.deleteMany({
@@ -96,7 +86,6 @@ io.on("connection", async (socket) => {
     //   },
     // });
 
-    console.log("CREATE SESSION IN DB");
     const screenSession = await prisma.screenSession.create({
       data: {
         company_id: 3,
@@ -107,8 +96,9 @@ io.on("connection", async (socket) => {
         ip_info: sessionPayload.ip_info,
       },
     });
-    console.log({ screenSession }, sessionPayload.ip_info);
-    console.log("CREATE SCREEN SESSION", screenSession);
+    console.log(
+      `_node: ScreenSession with id: ${screenSession.id} successfully created.`
+    );
     const screenRecording = await prisma.screenRecording.create({
       data: {
         company_id: 3,
@@ -116,7 +106,9 @@ io.on("connection", async (socket) => {
         data: [],
       },
     });
-    console.log("CREATE SCREEN RECORDING", screenRecording);
+    console.log(
+      `_node: ScreenRecording with id: ${screenRecording.id} successfully created.`
+    );
     sessionId = screenSession.id;
     recordingId = screenRecording.id;
   });
@@ -140,22 +132,16 @@ io.on("connection", async (socket) => {
     console.log("new", newPackets);
   });
 
-  // const interval = setInterval(async () => {
-  //   console.log("interval");
-  //   if (eventsQueue.length > 0) {
-  //     const prevRecording = await prisma.screenRecording.findFirst({
-  //       where: { id: recordingId },
-  //     });
-  //     const newPackets = await prisma.screenRecording.update({
-  //       where: { id: recordingId },
-  //       data: {
-  //         data: [...prevRecording.data, ...eventsQueue],
-  //       },
-  //     });
-  //     console.log("CREATED " + eventsQueue.length + " EVENTS");
-  //     eventsQueue = [];
-  //   }
-  // }, POST_INTERVAL);
+  // Start emitter
+  const startInterval = (timeoutId) => {
+    socket.emit("room_info", {
+      connection_count: socket.client.conn.server.clientsCount,
+    });
+    if (timeoutId) clearTimeout(timeoutId);
+    const id = setTimeout(() => startInterval(id), 5000);
+  };
+
+  startInterval();
 });
 
 app.get("/", (req, res) => {
