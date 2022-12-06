@@ -31,9 +31,8 @@ io.on("connection", async (socket) => {
   let sessionId = undefined;
   let recordingId = undefined;
   var query = socket.handshake.query;
-  var { room_id, socket_id } = query;
+  var { room_id } = query;
   var location = query.location;
-  console.log({ socket_id });
 
   if (!location) {
     console.log("_node: DISCONNECTING SOCKET, NO LOCATION, HREF");
@@ -58,7 +57,7 @@ io.on("connection", async (socket) => {
   } else {
     socket.join("company_1");
     console.log(`_node: Joined room`);
-    socket.to(socket_id).emit("config", {
+    socket.to("company_1").emit("config", {
       recording_enabled: siteConfiguration.recording_enabled,
     });
     console.log(`_node: Config emitted.`);
