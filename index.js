@@ -32,6 +32,7 @@ io.on("connection", async (socket) => {
   let recordingId = undefined;
   var query = socket.handshake.query;
   var room_id = query.room_id;
+  var location = query.location;
   if (!room_id) {
     // Handle this as required
     console.log("_node: Exiting, no room_id found.");
@@ -43,7 +44,7 @@ io.on("connection", async (socket) => {
   console.log("_node: Session created.");
   console.log(`_node: ${room_id} joined.`);
 
-  console.log("url", socket.request.url);
+  console.log("url", location);
 
   let eventsQueue = [];
 
