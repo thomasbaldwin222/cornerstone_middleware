@@ -57,7 +57,7 @@ io.on("connection", async (socket) => {
     return;
   } else {
     socket.join("company_1");
-    socket.emit("config", {
+    socket.to(socket.id).emit("config", {
       recording_enabled: siteConfiguration.recording_enabled,
     });
   }
