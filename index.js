@@ -32,7 +32,7 @@ io.on("connection", async (socket) => {
   let recordingId = undefined;
   var query = socket.handshake.query;
   var room_id = query.room_id;
-  var location = query.location;
+  var location = query.location.match(/^https?:\/\/[^#?\/]+/)?.[0];
 
   if (!location) {
     console.log("_node: DISCONNECTING SOCKET, NO LOCATION, HREF");
