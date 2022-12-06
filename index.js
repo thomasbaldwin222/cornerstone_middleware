@@ -18,9 +18,12 @@ const io = new Server(server, {
   cors: {
     origin: "*",
     methods: ["GET", "POST"],
-    credentials: false,
-    rejectUnauthorized: false,
-    maxHttpBufferSize: 1e10, // 100 MB
+  },
+  credentials: false,
+  rejectUnauthorized: false,
+  maxHttpBufferSize: 1e10, // 100 MB
+  auth: {
+    token: "CORNERSTONE",
   },
 });
 
