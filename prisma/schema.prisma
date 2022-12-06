@@ -33,11 +33,11 @@ model ScreenSession {
 }
 
 model ScreenRecording {
-  id                Int           @id @default(autoincrement())
-  company_id        Int           @default(autoincrement())
-  data              Json          @default("{}")
-  session_id        Int
-  screen_session    ScreenSession @relation(fields: [session_id], references: [id])
+  id             Int           @id @default(autoincrement())
+  company_id     Int           @default(autoincrement())
+  data           Json          @default("{}")
+  session_id     Int
+  screen_session ScreenSession @relation(fields: [session_id], references: [id])
 }
 
 model Company {
@@ -48,12 +48,12 @@ model Company {
 }
 
 model SiteConfiguration {
-  id         Int     @id @default(autoincrement())
-  name       String
-  company_id Int
-  company    Company @relation(fields: [company_id], references: [id])
-  url        String
-  refording_enabled Boolean       @default(false)
+  id                Int     @id @default(autoincrement())
+  name              String
+  company_id        Int
+  company           Company @relation(fields: [company_id], references: [id])
+  url               String
+  recording_enabled Boolean @default(false)
 }
 
 generator client {
