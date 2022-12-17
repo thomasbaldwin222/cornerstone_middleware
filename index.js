@@ -39,16 +39,16 @@ io.on("connection", async (socket) => {
     return socket.disconnect();
   }
 
-  const siteConfiguration = await prisma.siteConfiguration.findFirst({
-    where: {
-      url: location.match(/^https?:\/\/[^#?\/]+/)?.[0],
-    },
-  });
+  // const siteConfiguration = await prisma.siteConfiguration.findFirst({
+  //   where: {
+  //     url: location.match(/^https?:\/\/[^#?\/]+/)?.[0],
+  //   },
+  // });
 
-  if (!siteConfiguration) {
-    console.log("_node: DISCONNECTING SOCKET, NO CONFIGURATION");
-    return socket.disconnect();
-  }
+  // if (!siteConfiguration) {
+  //   console.log("_node: DISCONNECTING SOCKET, NO CONFIGURATION");
+  //   return socket.disconnect();
+  // }
 
   if (!room_id) {
     // Handle this as required
@@ -61,7 +61,6 @@ io.on("connection", async (socket) => {
       recording_enabled: siteConfiguration.recording_enabled,
     });
     console.log(`_node: Config emitted.`);
-    console.log({ time: Date.now() });
   }
 
   console.log("_node: Session created.");
