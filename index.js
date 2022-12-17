@@ -114,6 +114,7 @@ io.on("connection", async (socket) => {
   });
 
   socket.on("rrweb_events", async (events) => {
+    console.log("_node: Inbound rrweb_events")
     if (!recordingId) return;
     // const size = new TextEncoder().encode(events).length;
     // const kiloBytes = size / 1024;
