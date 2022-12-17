@@ -27,8 +27,8 @@ model ScreenSession {
   company_id Int               @default(autoincrement())
   screen     Json
   location   Json              @default("{}")
-  date_time  BigInt?
   ip_info    Json              @default("{}")
+  date_time  BigInt?
   recordings ScreenRecording[]
 }
 
@@ -54,6 +54,16 @@ model SiteConfiguration {
   company           Company @relation(fields: [company_id], references: [id])
   url               String
   recording_enabled Boolean @default(false)
+  pages             Page[]
+}
+
+model Page {
+  id                    Int               @id @default(autoincrement())
+  name                  String
+  site_configuration_id Int
+  site_configuration    SiteConfiguration @relation(fields: [site_configuration_id], references: [id])
+  url                   String
+  recording_enabled     Boolean           @default(false)
 }
 
 generator client {
