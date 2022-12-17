@@ -57,9 +57,9 @@ io.on("connection", async (socket) => {
   } else {
     socket.join("company_1");
     console.log(`_node: Joined room`);
-    socket.emit("config", {
-      recording_enabled: siteConfiguration.recording_enabled,
-    });
+    // socket.emit("config", {
+    //   recording_enabled: siteConfiguration.recording_enabled,
+    // });
     console.log(`_node: Config emitted.`);
   }
 
